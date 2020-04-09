@@ -7,6 +7,7 @@ public class Ennemy : MonoBehaviour
     [SerializeField] private GameObject m_deathEffect = default;
     [SerializeField] private Transform m_effectParent = default;
     [SerializeField] private int m_scoreValue = 100;
+    [SerializeField] private int m_hits = 3;
 
     private BoxCollider m_collider;
 
@@ -26,7 +27,14 @@ public class Ennemy : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        OnDeathActions();
+        GetHit();
+        if (m_hits <= 0)
+            OnDeathActions();
+    }
+
+    private void GetHit()
+    {
+        m_hits -= 1;
     }
 
     private void OnDeathActions()

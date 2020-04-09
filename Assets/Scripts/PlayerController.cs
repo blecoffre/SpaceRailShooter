@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_controlPitchFactor = -20.0f;
     [SerializeField] private float m_controlRollFactor = -20.0f;
 
+    [Header("Guns")]
+    [SerializeField] private GameObject[] m_guns;
+
     private float m_xThrow;
     private float m_yThrow;
 
@@ -31,6 +34,7 @@ public class PlayerController : MonoBehaviour
         {
             ProcessTranslation();
             ProcessRotation();
+            ProcessFiring();
         }
     }
 
@@ -81,5 +85,23 @@ public class PlayerController : MonoBehaviour
     private void OnPlayerDeath() //called by string ref in PlayerCollisionsHandler
     {
         m_isControlEnabled = false;
+    }
+
+    private void ProcessFiring()
+    {
+        if (CrossPlatformInputManager.GetButton("Fire1"))
+        {
+            foreach (GameObject go in m_guns)
+            {
+                go.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (GameObject go in m_guns)
+            {
+                go.SetActive(false);
+            }
+        }
     }
 }
